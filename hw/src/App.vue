@@ -6,7 +6,7 @@
       </div>
     </header>
     <main>
-      <AddPaymentForm @add-payment="addPayment"/>
+      <AddPaymentForm @add-payment="addPayment" :categoryList="categoryList"/>
       <PaymentsDisplay :paymentsList="paymentsList" show/>
     </main>
   </div>
@@ -15,6 +15,7 @@
 <script>
 import PaymentsDisplay from './components/PaymentsDisplay.vue'
 import AddPaymentForm from './components/AddPaymentForm.vue'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
 
 export default {
   name: 'App',
@@ -22,37 +23,19 @@ export default {
     PaymentsDisplay,
     AddPaymentForm
   },
-  data () {
-    return {
-      paymentsList: []
+  methods: {
+    ...mapActions(['fetchData', 'fetchCategoryData']),
+    ...mapMutations(['ADD_PAYMENT', 'SET_CATEGORY_LIST']),
+    addPayment (data) {
+      this.ADD_PAYMENT(data)
     }
   },
-  methods: {
-    fetchPaymentsData () {
-      return [
-        {
-          date: '28.03.2020',
-          category: 'Food',
-          value: 169
-        },
-        {
-          date: '24.03.2020',
-          category: 'Transport',
-          value: 360
-        },
-        {
-          date: '24.03.2020',
-          category: 'Food',
-          value: 532
-        }
-      ]
-    },
-    addPayment (data) {
-      this.paymentsList.unshift(data)
-    }
+  computed: {
+    ...mapGetters(['paymentsList', 'categoryList'])
   },
   created () {
-    this.paymentsList = this.fetchPaymentsData()
+    this.fetchData()
+    this.fetchCategoryData()
   }
 }
 </script>

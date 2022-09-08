@@ -1,4 +1,4 @@
-# hw-1
+# costs
 
 ## Project setup
 ```
