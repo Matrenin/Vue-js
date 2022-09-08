@@ -3,7 +3,14 @@
     <button class="show__form__btn" @click="showAddForm = !showAddForm">add new form</button>
     <div v-show="showAddForm" class="add__form" >
       <input type="text" placeholder="date" v-model="newDate">
-      <input type="text" placeholder="category" v-model="newCategory">
+      <select v-model="newCategory" placeholder="category">
+        <option disabled value="">category</option>
+        <option
+          v-for="category of categoryList"
+          :key="category"
+          :value="category"
+        >{{ category }}</option>
+      </select>
       <input type="text" placeholder="value" v-model="newValue">
       <button class="add__form__btn" @click="addPayment">ADD</button>
     </div>
@@ -14,6 +21,12 @@
 
 export default {
   name: 'AddPaymentForm',
+  props: {
+    categoryList: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
       newDate: '',
@@ -79,7 +92,8 @@ export default {
   margin: 30px 0;
 }
 
-.add__form input {
+.add__form input,
+.add__form select {
   margin-bottom: 20px;
   padding: 12px;
   border: 1px solid #999;
