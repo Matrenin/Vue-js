@@ -1,5 +1,16 @@
 <template>
   <div class="form__costs">
+    <div class="btn__box__link">
+      <button @click="addFood">
+        <router-link class="router__link" to="/dashboard/Food?value=200">Food 200</router-link>
+      </button>
+      <button @click="addFood">
+        <router-link class="router__link" to="/dashboard/Navigation?value=500">Navigation 500</router-link>
+      </button>
+      <button @click="addFood">
+        <router-link class="router__link" to="/dashboard/Entertaiment?value=2000">Entertaiment 200</router-link>
+      </button>
+    </div>
     <button class="show__form__btn" @click="showAddForm = !showAddForm">add new form</button>
     <div v-show="showAddForm" class="add__form" >
       <input type="text" placeholder="date" v-model="newDate">
@@ -18,15 +29,10 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'AddPaymentForm',
-  props: {
-    categoryList: {
-      type: Array,
-      default: () => []
-    }
-  },
   data () {
     return {
       newDate: '',
@@ -47,6 +53,17 @@ export default {
         date: newDate || currenDate
       }
       this.$emit('add-payment', data)
+      this.newValue = ''
+      this.newDate = ''
+      this.newCategory = ''
+    },
+    ...mapActions(['fetchCategoryData']),
+    ...mapMutations(['SET_CATEGORY_LIST']),
+    addFood () {
+      this.showAddForm = true
+      this.newCategory = this.$route.params.category
+      this.newValue = this.$route.query.value
+      console.log(this.$route)
     }
   },
   computed: {
@@ -62,7 +79,11 @@ export default {
         month = `${'0' + month}`
       }
       return `${day}.${month}.${year}`
-    }
+    },
+    ...mapGetters(['categoryList'])
+  },
+  created () {
+    this.fetchCategoryData()
   }
 }
 </script>
@@ -72,6 +93,24 @@ export default {
   display: flex;
   flex-direction: column;
   margin-left: 90px;
+}
+
+.btn__box__link {
+  align-self: flex-start;
+  margin: 30px 0;
+}
+
+.btn__box__link button {
+  margin: 0 12px;
+  padding: 10px 24px;
+  border: none;
+  background: #ccc;
+  border-radius: 6px;
+}
+
+.router__link {
+  color: #000;
+  text-decoration: none;
 }
 
 .show__form__btn {
