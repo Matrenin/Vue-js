@@ -1,20 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import categoryList from './modules/categoryList'
+import titleTable from './modules/titleTable'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    paymentsList: [],
-    titleTable: ['#', 'Date', 'Category', 'Value'],
-    paginationsBtn: [1, 2, 3],
-    categoryList: []
+    paymentsList: []
   },
   getters: {
     paymentsList: (state) => state.paymentsList,
-    titleTable: (state) => state.titleTable,
-    paginationsBtn: (state) => state.paginationsBtn,
-    categoryList: (state) => state.categoryList
+    totalCosts: (state) => state.paymentsList.reduce((acc, el) => acc + +(el.value), 0)
   },
   mutations: {
     SET_PAYMENTS_LIST (state, paymentsList) {
@@ -22,9 +19,6 @@ export default new Vuex.Store({
     },
     ADD_PAYMENT (state, payment) {
       state.paymentsList.unshift(payment)
-    },
-    SET_CATEGORY_LIST (state, category) {
-      state.categoryList = category
     }
   },
   actions: {
@@ -47,12 +41,10 @@ export default new Vuex.Store({
         }
       ]
       commit('SET_PAYMENTS_LIST', data)
-    },
-    fetchCategoryData ({ commit }) {
-      const category = ['Sport', 'Navigation', 'Food', 'Entertaiment']
-      commit('SET_CATEGORY_LIST', category)
     }
   },
   modules: {
+    categoryList,
+    titleTable
   }
 })

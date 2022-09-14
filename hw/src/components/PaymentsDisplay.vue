@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show" class="payments__table">
+  <div class="payments__table">
     <div class="payments__title">
       <h3 v-for="title in titleTable" :key="title"> {{ title }}</h3>
     </div>
@@ -9,33 +9,23 @@
       <p>{{ paymen.category }}</p>
       <p>{{ paymen.value }}</p>
     </div>
-    <div class="paginations">
-      <div class="paginations__box">
-        <span>&#10094;</span>
-        <button v-for='btn of paginationsBtn' :key="btn">{{ btn }}</button>
-        <span>&#10095;</span>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations } from 'vuex'
+
 export default {
   name: 'PlaymentsDisplay',
-  props: {
-    paymentsList: {
-      type: Array,
-      default: () => ([])
-    },
-    show: Boolean
+  methods: {
+    ...mapActions(['addTitleTable']),
+    ...mapMutations(['ADD_TITLE_TABLE'])
   },
   computed: {
-    titleTable () {
-      return this.$store.state.titleTable
-    },
-    paginationsBtn () {
-      return this.$store.state.paginationsBtn
-    }
+    ...mapGetters(['titleTable', 'paymentsList'])
+  },
+  created () {
+    this.addTitleTable()
   }
 }
 </script>
