@@ -1,14 +1,14 @@
 <template>
   <div class="form__costs">
     <div class="btn__box__link">
-      <button @click="addFood">
+      <button @click="addCosts">
         <router-link class="router__link" to="/dashboard/Food?value=200">Food 200</router-link>
       </button>
-      <button @click="addFood">
+      <button @click="addCosts">
         <router-link class="router__link" to="/dashboard/Navigation?value=500">Navigation 500</router-link>
       </button>
-      <button @click="addFood">
-        <router-link class="router__link" to="/dashboard/Entertaiment?value=2000">Entertaiment 200</router-link>
+      <button @click="addCosts">
+        <router-link class="router__link" to="/dashboard/Entertainment?value=2000">Entertainment 2000</router-link>
       </button>
     </div>
     <button class="show__form__btn" @click="showAddForm = !showAddForm">add new form</button>
@@ -48,9 +48,12 @@ export default {
         return
       }
       const data = {
+        id: this.paymentsList.length + 1,
         value: newValue,
         category: newCategory,
-        date: newDate || currenDate
+        date: newDate || currenDate,
+        showSettingsEdit: false,
+        showWindowModal: false
       }
       this.$emit('add-payment', data)
       this.newValue = ''
@@ -59,11 +62,10 @@ export default {
     },
     ...mapActions(['fetchCategoryData']),
     ...mapMutations(['SET_CATEGORY_LIST']),
-    addFood () {
+    addCosts () {
       this.showAddForm = true
       this.newCategory = this.$route.params.category
       this.newValue = this.$route.query.value
-      console.log(this.$route)
     }
   },
   computed: {
@@ -80,7 +82,7 @@ export default {
       }
       return `${day}.${month}.${year}`
     },
-    ...mapGetters(['categoryList'])
+    ...mapGetters(['categoryList', 'paymentsList'])
   },
   created () {
     this.fetchCategoryData()
@@ -92,7 +94,6 @@ export default {
 .form__costs {
   display: flex;
   flex-direction: column;
-  margin-left: 90px;
 }
 
 .btn__box__link {
@@ -102,7 +103,7 @@ export default {
 
 .btn__box__link button {
   margin: 0 12px;
-  padding: 10px 24px;
+  padding: 10px 0;
   border: none;
   background: #ccc;
   border-radius: 6px;
@@ -111,6 +112,9 @@ export default {
 .router__link {
   color: #000;
   text-decoration: none;
+  width: 100%;
+  height: 100%;
+  padding: 10px 24px;
 }
 
 .show__form__btn {

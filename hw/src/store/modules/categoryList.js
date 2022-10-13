@@ -12,7 +12,7 @@ export default {
   },
   actions: {
     fetchCategoryData ({ commit }) {
-      const category = ['Sport', 'Navigation', 'Food', 'Entertaiment']
+      const category = ['Sport', 'Navigation', 'Food', 'Entertainment']
       commit('SET_CATEGORY_LIST', category)
     }
   }

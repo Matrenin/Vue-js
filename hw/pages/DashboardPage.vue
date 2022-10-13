@@ -5,20 +5,22 @@
         <p class="title__costs">My personal costs: {{ totalCosts }}</p>
       </div>
     </header>
-    <main>
-      <AddPaymentForm @add-payment="addPayment"/>
-      <PaymentsDisplay/>
-    </main>
+    <AddPaymentForm @add-payment="addNewPayment"/>
+    <PaymentsDisplay/>
   </div>
 </template>
 
 <script>
+import AddPaymentForm from '@/components/AddPaymentForm.vue'
 import PaymentsDisplay from '../src/components/PaymentsDisplay.vue'
-import AddPaymentForm from '../src/components/AddPaymentForm.vue'
-import { mapActions, mapMutations, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'DashboardPage',
+  data: () => ({
+    showModal: false,
+    modalSetting: {}
+  }),
   components: {
     PaymentsDisplay,
     AddPaymentForm
@@ -26,7 +28,7 @@ export default {
   methods: {
     ...mapActions(['fetchData']),
     ...mapMutations(['ADD_PAYMENT']),
-    addPayment (data) {
+    addNewPayment (data) {
       this.ADD_PAYMENT(data)
     }
   },
@@ -40,8 +42,24 @@ export default {
 </script>
 
 <style scoped>
+header {
+  margin: 20px 0;
+}
+
+.my__costs {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin-left: 90px;
+}
+
 .title__costs {
   text-align: start;
-  margin: 20px 90px;
+  margin: 20px 0px;
+}
+
+.btn__show-modal {
+  display: flex;
+  justify-content: start;
 }
 </style>
