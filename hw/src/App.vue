@@ -5,7 +5,9 @@
       <router-link to="/about">About</router-link>
       <router-link to="/notfound">Not Found</router-link>
     </nav>
-    <router-view/>
+    <main>
+      <router-view/>
+    </main>
   </div>
 </template>
 
@@ -17,6 +19,12 @@ export default {
 </script>
 
 <style lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
