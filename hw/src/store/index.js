@@ -88,7 +88,7 @@ export default new Vuex.Store({
         },
         {
           id: 8,
-          date: '1.05.2020',
+          date: '01.05.2020',
           category: 'Sport',
           value: 500,
           showSettingsEdit: false,
@@ -112,7 +112,7 @@ export default new Vuex.Store({
         },
         {
           id: 11,
-          date: '9.06.2020',
+          date: '09.06.2020',
           category: 'Food',
           value: 280,
           showSettingsEdit: false,

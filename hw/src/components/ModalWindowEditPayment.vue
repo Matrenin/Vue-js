@@ -1,20 +1,22 @@
 <template>
-  <div class="wrapper">
-    <div class="content">
-      <input type="text" v-model="editDate">
-      <select placeholder="category" v-model="editCategory">
-        <option disabled value="">category</option>
-        <option
-          v-for="category of categoryList"
-          :key="category"
-          :value="category"
-        >{{ category }}</option>
-      </select>
-      <input type="text" v-model="editValue">
-      <button class="edit__costs-btn" @click="editPayment(paymen)">Edit</button>
-      <button class="modal-close" @click="closeModal">&times;</button>
+  <transition name="editModal">
+    <div class="wrapper">
+      <div class="content">
+        <input type="text" v-model="editDate">
+        <select placeholder="category" v-model="editCategory">
+          <option disabled value="">category</option>
+          <option
+            v-for="category of categoryList"
+            :key="category"
+            :value="category"
+          >{{ category }}</option>
+        </select>
+        <input type="text" v-model="editValue">
+        <button class="edit__costs-btn" @click="editPayment(paymen)">Edit</button>
+        <button class="modal-close" @click="closeModal">&times;</button>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -127,5 +129,30 @@ export default {
   border: 1px solid #62F4E7;
   align-self: flex-end;
   color: #fff;
+}
+
+// Animation
+.editModal-enter,
+.editModal-leave-to {
+  opacity: 0;
+}
+
+.editModal-enter-active {
+  animation: edit-modal .4s;
+}
+
+.editModal-leave-active {
+  animation: edit-modal .4s reverse;
+}
+
+@keyframes edit-modal {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  100% {
+    opacity: .6;
+    transform: translateY(0);
+  }
 }
 </style>

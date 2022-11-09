@@ -4,7 +4,7 @@
       <h3 v-for="title in titleTable" :key="title"> {{ title }}</h3>
     </div>
     <div class="payments__list" v-for="(paymen, index) in pageList" :key="index">
-      <p>{{ paymen.id }}</p>
+      <p>{{ index + 1 }}</p>
       <p>{{ paymen.date }}</p>
       <p>{{ paymen.category }}</p>
       <p>{{ paymen.value }}</p>
@@ -53,7 +53,6 @@ export default {
     ...mapActions(['addTitleTable']),
     ...mapMutations(['ADD_TITLE_TABLE', 'DELETE_PAYMENT', 'EDIT_PAYMENT']),
     showModalEditPayment () {
-      // this.showWindowModal = true
       this.paymentsList.forEach(el => {
         el.showSettingsEdit = false
       })
