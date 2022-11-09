@@ -12,19 +12,21 @@
       </button>
     </div>
     <button class="show__form__btn" @click="showAddForm = !showAddForm">add new form</button>
-    <div v-show="showAddForm" class="add__form" >
-      <input type="text" placeholder="date" v-model="newDate">
-      <select v-model="newCategory" placeholder="category">
-        <option disabled value="">category</option>
-        <option
-          v-for="category of categoryList"
-          :key="category"
-          :value="category"
-        >{{ category }}</option>
-      </select>
-      <input type="text" placeholder="value" v-model="newValue">
-      <button class="add__form__btn" @click="addPayment">ADD</button>
-    </div>
+    <transition name="addForm">
+      <div v-show="showAddForm" class="add__form" >
+        <input type="text" placeholder="date" v-model="newDate" class="inputDate">
+        <select v-model="newCategory" placeholder="category" class="select__category">
+          <option disabled value="">category</option>
+          <option
+            v-for="category of categoryList"
+            :key="category"
+            :value="category"
+          >{{ category }}</option>
+        </select>
+        <input type="text" placeholder="value" v-model.number="newValue" class="inputValue">
+        <button class="add__form-btn" @click="addPayment">ADD</button>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -44,7 +46,7 @@ export default {
   methods: {
     addPayment () {
       const { newDate, newCategory, newValue, currenDate } = this
-      if (newCategory === '' || newValue === '') {
+      if (newCategory === '' && newValue === '') {
         return
       }
       const data = {
@@ -149,7 +151,7 @@ export default {
   outline: 1px solid #18C2B3;
 }
 
-.add__form__btn {
+.add__form-btn {
   width: 200px;
   padding: 12px 26px;
   border-radius: 3px;
@@ -157,5 +159,30 @@ export default {
   border: 1px solid #62F4E7;
   align-self: flex-end;
   color: #fff;
+}
+
+/* Animation */
+.addForm-enter,
+.addForm-leave-to {
+  opacity: 0;
+}
+
+.addForm-enter-active {
+  animation: add-form .4s;
+}
+
+.addForm-leave-active {
+  animation: add-form .4s reverse;
+}
+
+@keyframes add-form {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: .6;
+    transform: translateX(0);
+  }
 }
 </style>
